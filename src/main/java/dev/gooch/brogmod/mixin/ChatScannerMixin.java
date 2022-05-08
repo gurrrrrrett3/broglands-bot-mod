@@ -1,5 +1,6 @@
 package dev.gooch.brogmod.mixin;
 
+import dev.gooch.brogmod.BrogMod;
 import dev.gooch.brogmod.websocket.Message;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -25,7 +26,7 @@ public class ChatScannerMixin {
         Message msg = new Message();
         msg.setType("MESSAGE");
         msg.setUsername();
-        msg.setText(message.toString());
+        msg.setText(message.asString());
+        BrogMod.wsClent.send(msg.get());
     }
-
 }
