@@ -1,5 +1,6 @@
 package dev.gooch.brogmod.websocket;
 
+import dev.gooch.brogmod.BrogMod;
 import dev.gooch.brogmod.Util;
 import net.minecraft.client.util.Session;
 import org.java_websocket.client.WebSocketClient;
@@ -27,28 +28,36 @@ public class BrogWebsocketClient extends WebSocketClient {
         Message msg = new Message();
         msg.setType("CONNECT");
         msg.setUsername(Util.getUsername());
-        System.out.println("Sucessfully connected to the Broglands Websocket server!");
+        BrogMod.LOGGER.info("Sucessfully connected to the Broglands Websocket server!");
         this.send(msg.get());
-        System.out.println(msg.get());
     }
 
     @Override
     public void onClose(int code, String reason, boolean remote) {
-        System.out.println("closed with exit code " + code + " additional info: " + reason);
+        BrogMod.LOGGER.error("Websocket closed with exit code " + code + " additional info: " + reason);
     }
 
     @Override
     public void onMessage(String message) {
-        System.out.println("received message: " + message);
+
+
+        BrogMod.LOGGER.info("received message: " + message);
     }
 
     @Override
     public void onMessage(ByteBuffer message) {
-        System.out.println("received ByteBuffer");
+
+        BrogMod.LOGGER.info("received ByteBuffer");
     }
 
     @Override
     public void onError(Exception ex) {
         System.err.println("an error occurred:" + ex);
+    }
+
+    public void sendMessage(String message) {
+        if (this.isOpen()) {
+            this.send(message);
+        }
     }
 }

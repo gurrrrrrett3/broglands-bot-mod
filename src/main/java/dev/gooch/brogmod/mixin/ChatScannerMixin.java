@@ -27,6 +27,6 @@ public class ChatScannerMixin {
         msg.setType("MESSAGE");
         msg.setUsername();
         msg.setText(message.asString());
-        BrogMod.wsClent.send(msg.get());
+        BrogMod.wsClent.sendMessage(msg.get());
     }
 }
